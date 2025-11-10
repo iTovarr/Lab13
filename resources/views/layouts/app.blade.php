@@ -15,6 +15,58 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+ <style>
+    body {
+        background: linear-gradient(135deg, #63eef5ff, #7994f5ff);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .card {
+        border-radius: 20px !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: white;
+    }
+
+    .btn-primary {
+        background-color: #6685ffff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #4de1ffff;
+    }
+
+    .btn-outline-secondary {
+        border-color: #66ccffff;
+        color: #75a7c9ff;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #66e6ffff;
+        color: white;
+    }
+
+    h1, h2, h3, h4 {
+        color: #0c2839ff;
+    }
+
+    textarea, input, select {
+        border-radius: 10px !important;
+    }
+
+    footer {
+        background-color: rgba(163, 102, 255, 0.1);
+        text-align: center;
+        padding: 15px;
+        margin-top: 30px;
+        border-radius: 15px;
+    }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+   
 </head>
 <body>
     <div id="app">
