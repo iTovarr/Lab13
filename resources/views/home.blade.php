@@ -25,7 +25,7 @@
                 gap: 20px; /* separación entre botones */
                 height: 200px;
             ">
-                <!-- Botón Ver Publicaciones -->
+                
                 <a href="{{ route('posts.index') }}" 
                     style="
                         display: inline-block;
@@ -43,7 +43,6 @@
                     Ver Publicaciones
                 </a>
 
-                <!-- Botón Ver Notas y Notificaciones -->
                 <a href="{{ route('notas.index') }}" 
                     style="
                         display: inline-block;
