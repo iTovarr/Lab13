@@ -8,17 +8,13 @@ class NotaController extends Controller
 {
     public function index()
     {
-        // Load users with their active notes, reminders, and subquery for note count
-        $users = User::with(['notas', 'notas.recordatorio'])
-            ->addSelect([
-                'total_notas' => Nota::selectRaw('count(*)')
-                    ->whereColumn('user_id', 'users.id')
-                    ->whereHas('recordatorio', fn($query) => $query->where('fecha_vencimiento', '>=', now()))
-            ])
-            ->get();
-        return view('notas.index', compact('users'));
+        $users = User::with(['notas.recordatorio', 'notas.actividades'])
+                    ->get();
+
+        return view('notas.index', [
+            'users' => $users
+        ]);
     }
-    // Create a note with a reminder
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -36,5 +32,12 @@ class NotaController extends Controller
             'fecha_vencimiento' => $validated['fecha_vencimiento'],
         ]);
         return redirect()->route('notas.index')->with('success', 'Nota creada!');
+    }
+
+    public function destroy(Nota $nota)
+    {
+        $nota->delete();
+
+        return redirect()->route('notas.index')->with('success', 'Nota eliminada exitosamente.');
     }
 }

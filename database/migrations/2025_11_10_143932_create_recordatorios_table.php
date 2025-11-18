@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('recordatorios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('nota_id')->constrained()->onDelete('cascade');
+            $table->foreignId('nota_id')->constrained('notas')->onDelete('cascade');
             $table->dateTime('fecha_vencimiento'); // Cambiado 'due_date' a 'fecha_venci
             $table->boolean('completado')->default(false); // Cambiado 'is_completed' a
             $table->timestamps();

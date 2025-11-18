@@ -1,15 +1,17 @@
 <?php
+// app/Models/Actividad.php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Recordatorio extends Model
+class Actividad extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nota_id', 'fecha_vencimiento', 'completado'];
+    protected $table = 'actividades';
+    protected $fillable = ['nota_id', 'descripcion', 'completada'];
 
     public function nota()
     {
