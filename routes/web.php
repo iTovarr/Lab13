@@ -20,8 +20,12 @@ Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name
 // Rutas de Notas
 Route::resource('notas', NotaController::class);
 
-// Rutas de Actividades (¡ESTA ES LA LÍNEA MODIFICADA!)
-Route::resource('actividades', ActividadController::class)->parameters(['actividades' => 'actividad']);
+// CRUD Actividades usando solo IDs
+Route::get('/actividades/create', [ActividadController::class, 'create'])->name('actividades.create');
+Route::post('/actividades', [ActividadController::class, 'store'])->name('actividades.store');
+Route::get('/actividades/{id}/edit', [ActividadController::class, 'edit'])->name('actividades.edit');
+Route::put('/actividades/{id}', [ActividadController::class, 'update'])->name('actividades.update');
+Route::delete('/actividades/{id}', [ActividadController::class, 'destroy'])->name('actividades.destroy');
 
-// Ruta de Toggle (Esta ya la tenías y está bien)
-Route::patch('/actividades/{actividad}/toggle', [ActividadController::class, 'toggleComplete'])->name('actividades.toggle');
+// Toggle completar
+Route::patch('/actividades/{id}/toggle', [ActividadController::class, 'toggleComplete'])->name('actividades.toggle');

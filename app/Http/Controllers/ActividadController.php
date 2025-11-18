@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Actividad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ActividadController extends Controller
 {
     public function create()
     {
         $nota_id = request('nota_id');
-        
         return view('actividades.create', ['nota_id' => $nota_id]);
     }
 
@@ -21,54 +20,60 @@ class ActividadController extends Controller
             'descripcion' => 'required|string|max:255',
         ]);
 
-        Actividad::create([
+        DB::table('actividades')->insert([
             'nota_id' => $request->nota_id,
             'descripcion' => $request->descripcion,
+            'completada' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return redirect()->route('notas.index')
                          ->with('success', 'Actividad agregada exitosamente.');
     }
 
-    public function edit(Actividad $actividad)
+    public function edit($id)
     {
+        $actividad = DB::table('actividades')->where('id', $id)->first();
+
         return view('actividades.edit', compact('actividad'));
     }
 
-    public function update(Request $request, Actividad $actividad)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'descripcion' => 'required|string|max:255',
         ]);
 
-        $actividad->update([
-            'descripcion' => $request->descripcion,
-        ]);
+        DB::table('actividades')
+            ->where('id', $id)
+            ->update([
+                'descripcion' => $request->descripcion,
+                'updated_at' => now(),
+            ]);
 
         return redirect()->route('notas.index')->with('success', 'Actividad actualizada.');
     }
 
-    public function toggleComplete(Actividad $actividad)
+    public function toggleComplete($id)
     {
-        $actividad->completada = !$actividad->completada;
-        $actividad->save();
+        // Obtener estado actual
+        $actividad = DB::table('actividades')->where('id', $id)->first();
+
+        DB::table('actividades')
+            ->where('id', $id)
+            ->update([
+                'completada' => !$actividad->completada,
+                'updated_at' => now(),
+            ]);
 
         return back()->with('success', 'Estado de actividad cambiado.');
     }
 
-    public function destroy(Actividad $actividad)
+    public function destroy($id)
     {
-        $actividad->delete();
-        
-        return back()->with('success', 'Actividad eliminada.');
-    }
+        DB::table('actividades')->where('id', $id)->delete();
 
-    public function index()
-    {
-        //
-    }
-    public function show(Actividad $actividad)
-    {
-        //
+        return back()->with('success', 'Actividad eliminada.');
     }
 }
